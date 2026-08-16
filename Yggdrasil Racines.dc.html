@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap" rel="stylesheet" />
+<style>
+  html { background: #030304; scroll-behavior: smooth; }
+  body { margin: 0; background: #030304; color: #EDEAE4; font-family: Jost, Helvetica, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  ::selection { background: #C6A25C; color: #030304; }
+  a { color: #EDEAE4; text-decoration: none; transition: color .5s ease; }
+  a:hover { color: #C6A25C; }
+  @keyframes ygg-spark { 0%,100% { opacity: .25; transform: scale(1); } 50% { opacity: .9; transform: scale(1.35); } }
+  @keyframes ygg-seed { 0% { opacity: 0; transform: scale(.2); } 40% { opacity: 1; transform: scale(1); } 100% { opacity: .55; transform: scale(.85); } }
+  @keyframes ygg-rise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+  @keyframes ygg-drop { 0% { transform: translateY(-100%); } 100% { transform: translateY(320%); } }
+  @keyframes ygg-float { 0%,100% { transform: translateY(-5px); } 50% { transform: translateY(5px); } }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #030304; }
+  ::-webkit-scrollbar-thumb { background: #1e1e22; }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.161.0/examples/jsm/"}}</script>
+<script type="module">
+(async () => {
+  try {
+    const THREE = await import('three');
+    const { GLTFLoader } = await import('three/addons/loaders/GLTFLoader.js');
+    let host = null;
+    for (let i = 0; i < 120 && !host; i++) { host = document.getElementById('ygg-root-3d'); if (!host) await new Promise(r => setTimeout(r, 100)); }
+    if (!host || host.dataset.mounted) return;
+    host.dataset.mounted = '1';
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
+    camera.position.set(0, 0, 6);
+    scene.add(new THREE.AmbientLight(0xaab0bb, 0.5));
+    const key = new THREE.DirectionalLight(0xffffff, 2.3); key.position.set(3, 4, 5); scene.add(key);
+    const rim = new THREE.DirectionalLight(0xC6A25C, 1.9); rim.position.set(-4, -1, -3); scene.add(rim);
+    const glow = new THREE.PointLight(0x89a7d6, 7, 20); glow.position.set(-2, 2, 3); scene.add(glow);
+    const pivot = new THREE.Group(); scene.add(pivot);
+    const size = () => { const r = host.getBoundingClientRect(); renderer.setSize(r.width, Math.max(r.height, 1), false); camera.aspect = r.width / Math.max(r.height, 1); camera.updateProjectionMatrix(); };
+    renderer.domElement.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0;transition:opacity 2.6s ease';
+    host.replaceChildren(renderer.domElement); size();
+    addEventListener('resize', size);
+    const gltf = await new GLTFLoader().loadAsync('assets/yggdrasil.glb');
+    const model = gltf.scene;
+    model.traverse(o => { if (o.isMesh && o.material) { o.material.metalness = 0.86; o.material.roughness = 0.26; } });
+    const box = new THREE.Box3().setFromObject(model);
+    model.position.sub(box.getCenter(new THREE.Vector3()));
+    model.scale.setScalar(3.0 / Math.max(...box.getSize(new THREE.Vector3()).toArray()));
+    pivot.add(model);
+    renderer.domElement.style.opacity = '1';
+    let mx = 0, my = 0, tx = 0, ty = 0;
+    addEventListener('pointermove', e => { tx = e.clientX / innerWidth - .5; ty = e.clientY / innerHeight - .5; }, { passive: true });
+    const tick = () => {
+      mx += (tx - mx) * .05; my += (ty - my) * .05;
+      pivot.rotation.y = scrollY * 0.0018 + mx * 0.7;
+      pivot.rotation.x = my * 0.35 - Math.min(scrollY, 1600) * 0.00012;
+      pivot.position.y = Math.sin(performance.now() / 2800) * 0.07;
+      renderer.render(scene, camera);
+      requestAnimationFrame(tick);
+    };
+    tick();
+  } catch (e) { console.warn('3D indisponible', e); }
+})();
+</script>
+</helmet>
+
+<canvas ref="{{ roots }}" style="position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;"></canvas>
+<div style="position: fixed; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(120% 70% at 50% 0%, rgba(198,162,92,.07), transparent 60%), radial-gradient(90% 60% at 50% 100%, rgba(137,167,214,.06), transparent 65%);"></div>
+
+<div style="position: relative; z-index: 2;">
+
+<header style="position: fixed; top: 0; left: 0; right: 0; z-index: 40; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 18px clamp(18px, 4vw, 52px); font-size: 10px; letter-spacing: .3em; text-transform: uppercase; color: rgba(237,234,228,.55); background: linear-gradient(to bottom, rgba(3,3,4,.85), transparent);">
+  <a href="#origin" style="display: flex; align-items: center; gap: 12px; color: rgba(237,234,228,.8);">
+    <img src="assets/mark-yggdrasil.png" alt="Yggdrasil" style="width: 24px; height: 24px; object-fit: contain;" />
+    <span>Yggdrasil Group</span>
+  </a>
+  <span style="font-variant-numeric: tabular-nums;">{{ depthLabel }}</span>
+</header>
+
+<section id="origin" style="position: relative; height: 100svh; overflow: hidden; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: clamp(12px, 2.4vh, 30px); padding: clamp(56px, 8vh, 80px) clamp(20px, 5vw, 60px) 26px; text-align: center;">
+  <span style="width: 7px; height: 7px; border-radius: 50%; background: #F4EEDF; box-shadow: 0 0 26px 8px rgba(244,238,223,.5); animation: ygg-seed 4s cubic-bezier(.2,.8,.2,1) both;"></span>
+  <div id="ygg-root-3d" style="position: relative; flex: 1 1 auto; min-height: 0; width: min(56vh, 540px); max-height: min(42vh, 380px); max-width: 100%;">
+    <img src="assets/yggdrasil-cut.png" alt="Emblème Yggdrasil" style="position: absolute; inset: 0; margin: auto; width: 100%; height: 100%; object-fit: contain; opacity: .8; animation: ygg-float 10s ease-in-out infinite;" />
+  </div>
+  <h1 style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); margin: 0;">Yggdrasil Group</h1>
+  <p style="margin: 0; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(17px, 2vw, 27px); color: rgba(237,234,228,.72); animation: ygg-rise 2.6s cubic-bezier(.16,.84,.24,1) 2.7s both;">Everything begins beneath the surface.</p>
+  <div style="margin-top: auto; padding-bottom: 8px; display: flex; flex-direction: column; align-items: center; gap: 10px; font-size: 9px; letter-spacing: .34em; text-transform: uppercase; color: rgba(237,234,228,.35);">
+    <span>Descendre</span>
+    <span style="position: relative; width: 1px; height: 46px; overflow: hidden; background: rgba(237,234,228,.12);"><span style="position: absolute; inset: 0; background: linear-gradient(to bottom, transparent, #C6A25C); animation: ygg-drop 2.8s cubic-bezier(.6,0,.4,1) infinite;"></span></span>
+  </div>
+</section>
+
+<section id="roots" style="position: relative; min-height: 92svh; display: grid; place-items: center; padding: 0 clamp(20px, 5vw, 60px);">
+  <div data-reveal="" style="max-width: 620px; text-align: center; display: grid; gap: 22px; justify-items: center;">
+    <span style="font-size: 10px; letter-spacing: .42em; text-transform: uppercase; color: #C6A25C;">02 — Roots</span>
+    <h2 style="margin: 0; font-size: clamp(24px, 3.4vw, 46px); font-weight: 200; line-height: 1.2; text-wrap: balance;">Le réseau se ramifie. Chaque racine mène à une entité.</h2>
+    <p style="margin: 0; font-size: clamp(15px, 1.2vw, 18px); line-height: 1.75; color: rgba(237,234,228,.55); max-width: 46ch; text-wrap: pretty;">Suivez le chemin : les fiches ne s'affichent pas ensemble, elles se matérialisent au bout des ramifications, l'une après l'autre.</p>
+  </div>
+</section>
+
+<div data-fiches="">
+  <section data-fiche="01" style="position: relative; min-height: 118svh; display: flex; align-items: center; justify-content: flex-start; padding: 0 clamp(20px, 6vw, 90px);">
+    <article data-card="" style="position: relative; width: min(560px, 100%); display: grid; gap: 26px; padding: clamp(28px, 3.4vw, 48px); border: 1px solid rgba(237,234,228,.12); border-radius: 3px; background: linear-gradient(155deg, rgba(237,234,228,.055), rgba(3,3,4,.72)); backdrop-filter: blur(16px); box-shadow: 0 40px 120px -60px rgba(137,167,214,.5); transition: border-color .8s ease, box-shadow .8s ease, transform .8s cubic-bezier(.2,.7,.2,1);">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 18px;">
+        <span style="font-size: 11px; letter-spacing: .34em; color: rgba(237,234,228,.4);">01</span>
+        <img src="assets/mark-odin.png" alt="Odin la Science" style="width: 52px; height: 52px; object-fit: contain; animation: ygg-float 9s ease-in-out infinite;" />
+      </div>
+      <div>
+        <h3 style="margin: 0; font-size: clamp(28px, 3.4vw, 46px); font-weight: 200; letter-spacing: .04em;">Odin la Science</h3>
+        <p style="margin: 12px 0 0; font-size: 13px; letter-spacing: .18em; text-transform: uppercase; color: #89A7D6;">Infrastructure de la connaissance</p>
+      </div>
+      <p style="margin: 0; font-size: 15px; line-height: 1.8; color: rgba(237,234,228,.62); text-wrap: pretty;">Deux pôles : <strong style="font-weight: 400; color: rgba(237,234,228,.85);">Munin Atlas</strong>, base de savoirs scientifiques, et <strong style="font-weight: 400; color: rgba(237,234,228,.85);">Odin Lab</strong>, outils de gestion de laboratoire.</p>
+      <p style="margin: 0; padding-top: 20px; border-top: 1px solid rgba(237,234,228,.09); font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 17px; color: rgba(237,234,228,.7);">Mission — rendre la recherche instrumentable par tous ceux qui la font.</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+        <span style="padding: 6px 12px; border: 1px solid rgba(137,167,214,.28); border-radius: 999px; font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: rgba(237,234,228,.6);">Données</span>
+        <span style="padding: 6px 12px; border: 1px solid rgba(137,167,214,.28); border-radius: 999px; font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: rgba(237,234,228,.6);">Publications</span>
+        <span style="padding: 6px 12px; border: 1px solid rgba(137,167,214,.28); border-radius: 999px; font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: rgba(237,234,228,.6);">Laboratoires</span>
+      </div>
+      <a href="Entite Odin.dc.html" style="display: flex; align-items: center; gap: 14px; font-size: 10px; letter-spacing: .34em; text-transform: uppercase; color: rgba(237,234,228,.75);">
+        <span style="width: 7px; height: 7px; border-radius: 50%; background: #89A7D6; box-shadow: 0 0 14px 3px rgba(137,167,214,.6); animation: ygg-spark 3.4s ease-in-out infinite;"></span>Explorer
+      </a>
+    </article>
+  </section>
+
+  <section data-fiche="02" style="position: relative; min-height: 118svh; display: flex; align-items: center; justify-content: flex-end; padding: 0 clamp(20px, 6vw, 90px);">
+    <article data-card="" style="position: relative; width: min(560px, 100%); display: grid; gap: 26px; padding: clamp(28px, 3.4vw, 48px); border: 1px solid rgba(237,234,228,.12); border-radius: 3px; background: linear-gradient(155deg, rgba(237,234,228,.055), rgba(3,3,4,.72)); backdrop-filter: blur(16px); box-shadow: 0 40px 120px -60px rgba(198,162,92,.5); transition: border-color .8s ease, box-shadow .8s ease, transform .8s cubic-bezier(.2,.7,.2,1);">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 18px;">
+        <span style="font-size: 11px; letter-spacing: .34em; color: rgba(237,234,228,.4);">02</span>
+        <img src="assets/mark-saga.png" alt="Saga" style="width: 52px; height: 52px; object-fit: contain; animation: ygg-float 10s ease-in-out infinite;" />
+      </div>
+      <div>
+        <h3 style="margin: 0; font-size: clamp(28px, 3.4vw, 46px); font-weight: 200; letter-spacing: .04em;">Saga</h3>
+        <p style="margin: 12px 0 0; font-size: 13px; letter-spacing: .18em; text-transform: uppercase; color: #C6A25C;">Mémoire &amp; patrimoine</p>
+      </div>
+      <p style="margin: 0; font-size: 15px; line-height: 1.8; color: rgba(237,234,228,.62); text-wrap: pretty;">Préserver, organiser et transmettre le patrimoine culturel, historique et muséal — la pierre, les archives, la lumière dorée.</p>
+      <p style="margin: 0; padding-top: 20px; border-top: 1px solid rgba(237,234,228,.09); font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 17px; color: rgba(237,234,228,.7);">Mission — ce qui est transmis ne meurt pas.</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+        <span style="padding: 6px 12px; border: 1px solid rgba(198,162,92,.3); border-radius: 999px; font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: rgba(237,234,228,.6);">Manuscrits</span>
+        <span style="padding: 6px 12px; border: 1px solid rgba(198,162,92,.3); border-radius: 999px; font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: rgba(237,234,228,.6);">Artefacts</span>
+        <span style="padding: 6px 12px; border: 1px solid rgba(198,162,92,.3); border-radius: 999px; font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: rgba(237,234,228,.6);">Musées</span>
+      </div>
+      <a href="Entite Saga.dc.html" style="display: flex; align-items: center; gap: 14px; font-size: 10px; letter-spacing: .34em; text-transform: uppercase; color: rgba(237,234,228,.75);">
+        <span style="width: 7px; height: 7px; border-radius: 50%; background: #C6A25C; box-shadow: 0 0 14px 3px rgba(198,162,92,.6); animation: ygg-spark 3.8s ease-in-out infinite;"></span>Explorer
+      </a>
+    </article>
+  </section>
+
+  <section data-fiche="03" style="position: relative; min-height: 118svh; display: flex; align-items: center; justify-content: flex-start; padding: 0 clamp(20px, 6vw, 90px);">
+    <article data-card="" style="position: relative; width: min(560px, 100%); display: grid; gap: 26px; padding: clamp(28px, 3.4vw, 48px); border: 1px solid rgba(237,234,228,.12); border-radius: 3px; background: linear-gradient(155deg, rgba(237,234,228,.055), rgba(3,3,4,.72)); backdrop-filter: blur(16px); box-shadow: 0 40px 120px -60px rgba(232,106,138,.45); transition: border-color .8s ease, box-shadow .8s ease, transform .8s cubic-bezier(.2,.7,.2,1);">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 18px;">
+        <span style="font-size: 11px; letter-spacing: .34em; color: rgba(237,234,228,.4);">03</span>
+        <img src="assets/nua.png" alt="Nua" style="width: 48px; height: 48px; object-fit: contain; border-radius: 22%; animation: ygg-float 8.5s ease-in-out infinite;" />
+      </div>
+      <div>
+        <h3 style="margin: 0; font-size: clamp(28px, 3.4vw, 46px); font-weight: 200; letter-spacing: .04em;">Nua</h3>
+        <p style="margin: 12px 0 0; font-size: 13px; letter-spacing: .18em; text-transform: uppercase; color: #E86A8A;">Réseau centré sur l'humain</p>
+      </div>
+      <p style="margin: 0; font-size: 15px; line-height: 1.8; color: rgba(237,234,228,.62); text-wrap: pretty;">Un réseau social où la relation prime sur la compétition algorithmique : authenticité, échanges, communautés.</p>
+      <p style="margin: 0; padding-top: 20px; border-top: 1px solid rgba(237,234,228,.09); font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 17px; color: rgba(237,234,228,.7);">Mission — rendre le lien plus fort que la mesure.</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+        <span style="padding: 6px 12px; border: 1px solid rgba(232,106,138,.3); border-radius: 999px; font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: rgba(237,234,228,.6);">Communautés</span>
+        <span style="padding: 6px 12px; border: 1px solid rgba(232,106,138,.3); border-radius: 999px; font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: rgba(237,234,228,.6);">Relations</span>
+      </div>
+      <a href="Entite Nua.dc.html" style="display: flex; align-items: center; gap: 14px; font-size: 10px; letter-spacing: .34em; text-transform: uppercase; color: rgba(237,234,228,.75);">
+        <span style="width: 7px; height: 7px; border-radius: 50%; background: #E86A8A; box-shadow: 0 0 14px 3px rgba(232,106,138,.55); animation: ygg-spark 3.2s ease-in-out infinite;"></span>Explorer
+      </a>
+    </article>
+  </section>
+
+  <section data-fiche="04" style="position: relative; min-height: 118svh; display: flex; align-items: center; justify-content: flex-end; padding: 0 clamp(20px, 6vw, 90px);">
+    <article data-card="" style="position: relative; width: min(560px, 100%); display: grid; gap: 26px; padding: clamp(28px, 3.4vw, 48px); border: 1px solid rgba(237,234,228,.12); border-radius: 3px; background: linear-gradient(155deg, rgba(237,234,228,.055), rgba(3,3,4,.72)); backdrop-filter: blur(16px); box-shadow: 0 40px 120px -60px rgba(127,160,122,.45); transition: border-color .8s ease, box-shadow .8s ease, transform .8s cubic-bezier(.2,.7,.2,1);">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 18px;">
+        <span style="font-size: 11px; letter-spacing: .34em; color: rgba(237,234,228,.4);">04</span>
+        <img src="assets/mark-nidhogg.png" alt="Nídhögg" style="width: 52px; height: 52px; object-fit: contain; animation: ygg-float 9.5s ease-in-out infinite;" />
+      </div>
+      <div>
+        <h3 style="margin: 0; font-size: clamp(28px, 3.4vw, 46px); font-weight: 200; letter-spacing: .04em;">Nídhögg</h3>
+        <p style="margin: 12px 0 0; font-size: 13px; letter-spacing: .18em; text-transform: uppercase; color: #7FA07A;">Le monde des racines</p>
+      </div>
+      <p style="margin: 0; font-size: 15px; line-height: 1.8; color: rgba(237,234,228,.62); text-wrap: pretty;">Élevage et vente d'insectes et de cloportes. Écosystèmes clos, textures naturelles, mouvements biologiques.</p>
+      <p style="margin: 0; padding-top: 20px; border-top: 1px solid rgba(237,234,228,.09); font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 17px; color: rgba(237,234,228,.7);">Mission — faire du vivant discret une filière rigoureuse.</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+        <span style="padding: 6px 12px; border: 1px solid rgba(127,160,122,.3); border-radius: 999px; font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: rgba(237,234,228,.6);">Élevage</span>
+        <span style="padding: 6px 12px; border: 1px solid rgba(127,160,122,.3); border-radius: 999px; font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: rgba(237,234,228,.6);">Terrariums</span>
+      </div>
+      <a href="Entite Nidhogg.dc.html" style="display: flex; align-items: center; gap: 14px; font-size: 10px; letter-spacing: .34em; text-transform: uppercase; color: rgba(237,234,228,.75);">
+        <span style="width: 7px; height: 7px; border-radius: 50%; background: #7FA07A; box-shadow: 0 0 14px 3px rgba(127,160,122,.55); animation: ygg-spark 4s ease-in-out infinite;"></span>Explorer
+      </a>
+    </article>
+  </section>
+
+  <section data-fiche="05" style="position: relative; min-height: 118svh; display: flex; align-items: center; justify-content: flex-start; padding: 0 clamp(20px, 6vw, 90px);">
+    <article data-card="" style="position: relative; width: min(560px, 100%); display: grid; gap: 26px; padding: clamp(28px, 3.4vw, 48px); border: 1px solid rgba(237,234,228,.12); border-radius: 3px; background: linear-gradient(155deg, rgba(237,234,228,.055), rgba(3,3,4,.72)); backdrop-filter: blur(16px); box-shadow: 0 40px 120px -60px rgba(200,185,166,.4); transition: border-color .8s ease, box-shadow .8s ease, transform .8s cubic-bezier(.2,.7,.2,1);">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 18px;">
+        <span style="font-size: 11px; letter-spacing: .34em; color: rgba(237,234,228,.4);">05</span>
+        <img src="assets/mark-verdandi.png" alt="Verdandi" style="width: 52px; height: 52px; object-fit: contain; filter: brightness(1.35) saturate(1.1); animation: ygg-float 9s ease-in-out infinite;" />
+      </div>
+      <div>
+        <h3 style="margin: 0; font-size: clamp(28px, 3.4vw, 46px); font-weight: 200; letter-spacing: .04em;">Verdandi</h3>
+        <p style="margin: 12px 0 0; font-size: 13px; letter-spacing: .18em; text-transform: uppercase; color: #C8B9A6;">Création · couture · réseau</p>
+      </div>
+      <p style="margin: 0; font-size: 15px; line-height: 1.8; color: rgba(237,234,228,.62); text-wrap: pretty;">Plateforme reliant créateurs, clients et usines textiles : création de patrons, production, suivi.</p>
+      <p style="margin: 0; padding-top: 20px; border-top: 1px solid rgba(237,234,228,.09); font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 17px; color: rgba(237,234,228,.7);">Mission — remettre le fil entre les mains de celui qui dessine.</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+        <span style="padding: 6px 12px; border: 1px solid rgba(200,185,166,.3); border-radius: 999px; font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: rgba(237,234,228,.6);">Patrons</span>
+        <span style="padding: 6px 12px; border: 1px solid rgba(200,185,166,.3); border-radius: 999px; font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: rgba(237,234,228,.6);">Production</span>
+      </div>
+      <a href="Entite Verdandi.dc.html" style="display: flex; align-items: center; gap: 14px; font-size: 10px; letter-spacing: .34em; text-transform: uppercase; color: rgba(237,234,228,.75);">
+        <span style="width: 7px; height: 7px; border-radius: 50%; background: #C8B9A6; box-shadow: 0 0 14px 3px rgba(200,185,166,.5); animation: ygg-spark 3.6s ease-in-out infinite;"></span>Explorer
+      </a>
+    </article>
+  </section>
+
+  <section data-fiche="06" style="position: relative; min-height: 118svh; display: flex; align-items: center; justify-content: flex-end; padding: 0 clamp(20px, 6vw, 90px);">
+    <article data-card="" style="position: relative; width: min(560px, 100%); display: grid; gap: 26px; padding: clamp(28px, 3.4vw, 48px); border: 1px solid rgba(237,234,228,.12); border-radius: 3px; background: linear-gradient(155deg, rgba(237,234,228,.055), rgba(3,3,4,.72)); backdrop-filter: blur(16px); box-shadow: 0 40px 120px -60px rgba(185,192,199,.4); transition: border-color .8s ease, box-shadow .8s ease, transform .8s cubic-bezier(.2,.7,.2,1);">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 18px;">
+        <span style="font-size: 11px; letter-spacing: .34em; color: rgba(237,234,228,.4);">06</span>
+        <img src="assets/mark-sleipnir.png" alt="Sleipnir" style="width: 52px; height: 52px; object-fit: contain; animation: ygg-float 10.5s ease-in-out infinite;" />
+      </div>
+      <div>
+        <h3 style="margin: 0; font-size: clamp(28px, 3.4vw, 46px); font-weight: 200; letter-spacing: .04em;">Sleipnir</h3>
+        <p style="margin: 12px 0 0; font-size: 13px; letter-spacing: .18em; text-transform: uppercase; color: #B9C0C7;">Automobile d'exception</p>
+      </div>
+      <p style="margin: 0; font-size: 15px; line-height: 1.8; color: rgba(237,234,228,.62); text-wrap: pretty;">Sélection et vente de véhicules rares. Métal, reflets, lignes dynamiques, luxe silencieux.</p>
+      <p style="margin: 0; padding-top: 20px; border-top: 1px solid rgba(237,234,228,.09); font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 17px; color: rgba(237,234,228,.7);">Mission — la mécanique comme objet de collection.</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+        <span style="padding: 6px 12px; border: 1px solid rgba(185,192,199,.3); border-radius: 999px; font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: rgba(237,234,228,.6);">Sélection</span>
+        <span style="padding: 6px 12px; border: 1px solid rgba(185,192,199,.3); border-radius: 999px; font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: rgba(237,234,228,.6);">Collection</span>
+      </div>
+      <a href="Entite Sleipnir.dc.html" style="display: flex; align-items: center; gap: 14px; font-size: 10px; letter-spacing: .34em; text-transform: uppercase; color: rgba(237,234,228,.75);">
+        <span style="width: 7px; height: 7px; border-radius: 50%; background: #B9C0C7; box-shadow: 0 0 14px 3px rgba(185,192,199,.5); animation: ygg-spark 3.9s ease-in-out infinite;"></span>Explorer
+      </a>
+    </article>
+  </section>
+
+  <section data-fiche="07" style="position: relative; min-height: 118svh; display: flex; align-items: center; justify-content: flex-start; padding: 0 clamp(20px, 6vw, 90px);">
+    <article data-card="" style="position: relative; width: min(560px, 100%); display: grid; gap: 26px; padding: clamp(28px, 3.4vw, 48px); border: 1px solid rgba(237,234,228,.12); border-radius: 3px; background: linear-gradient(155deg, rgba(237,234,228,.055), rgba(3,3,4,.72)); backdrop-filter: blur(16px); box-shadow: 0 40px 120px -60px rgba(200,68,58,.45); transition: border-color .8s ease, box-shadow .8s ease, transform .8s cubic-bezier(.2,.7,.2,1);">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 18px;">
+        <span style="font-size: 11px; letter-spacing: .34em; color: rgba(237,234,228,.4);">07</span>
+        <img src="assets/mark-surtr.png" alt="Surtr" style="width: 52px; height: 52px; object-fit: contain; filter: brightness(1.4); animation: ygg-float 8.8s ease-in-out infinite;" />
+      </div>
+      <div>
+        <h3 style="margin: 0; font-size: clamp(28px, 3.4vw, 46px); font-weight: 200; letter-spacing: .04em;">Surtr</h3>
+        <p style="margin: 12px 0 0; font-size: 13px; letter-spacing: .18em; text-transform: uppercase; color: #C8443A;">New gen streetwear</p>
+      </div>
+      <p style="margin: 0; font-size: 15px; line-height: 1.8; color: rgba(237,234,228,.62); text-wrap: pretty;">Une marque de vêtements nouvelle génération : noir, rouge, broderies, matières en mouvement.</p>
+      <p style="margin: 0; padding-top: 20px; border-top: 1px solid rgba(237,234,228,.09); font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 17px; color: rgba(237,234,228,.7);">Mission — habiller une génération qui ne demande pas la permission.</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+        <span style="padding: 6px 12px; border: 1px solid rgba(200,68,58,.32); border-radius: 999px; font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: rgba(237,234,228,.6);">Broderie</span>
+        <span style="padding: 6px 12px; border: 1px solid rgba(200,68,58,.32); border-radius: 999px; font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: rgba(237,234,228,.6);">Collections</span>
+      </div>
+      <a href="Entite Surtr.dc.html" style="display: flex; align-items: center; gap: 14px; font-size: 10px; letter-spacing: .34em; text-transform: uppercase; color: rgba(237,234,228,.75);">
+        <span style="width: 7px; height: 7px; border-radius: 50%; background: #C8443A; box-shadow: 0 0 14px 3px rgba(200,68,58,.5); animation: ygg-spark 3.5s ease-in-out infinite;"></span>Explorer
+      </a>
+    </article>
+  </section>
+</div>
+
+<section id="crossing" style="position: relative; min-height: 130svh; display: grid; place-items: center; overflow: hidden;">
+  <canvas ref="{{ cloud }}" style="position: absolute; inset: 0; width: 100%; height: 100%;"></canvas>
+  <div style="position: sticky; top: 42vh; text-align: center; padding: 0 24px;">
+    <div style="font-size: 9px; letter-spacing: .46em; text-transform: uppercase; color: rgba(237,234,228,.42);">Constellations · Arbres · Réseaux</div>
+    <h2 style="margin: 20px 0 0; font-size: clamp(22px, 3.2vw, 42px); font-weight: 200; letter-spacing: .18em; text-transform: uppercase;">La traversée</h2>
+  </div>
+</section>
+
+<section id="final" style="position: relative; min-height: 150svh; display: grid; place-items: center; padding: clamp(80px, 12vh, 160px) clamp(20px, 5vw, 60px);">
+  <div style="position: sticky; top: 22vh; text-align: center; display: grid; gap: clamp(22px, 4vh, 40px); justify-items: center;">
+    <img src="assets/mark-yggdrasil.png" alt="Yggdrasil Group" data-reveal="" style="width: clamp(110px, 13vw, 190px); opacity: .9;" />
+    <h2 data-reveal="" style="margin: 0; font-size: clamp(26px, 5vw, 66px); font-weight: 200; letter-spacing: .26em; text-transform: uppercase; line-height: 1;">Yggdrasil Group</h2>
+    <p data-reveal="" style="margin: 0; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(19px, 2.4vw, 32px); color: rgba(237,234,228,.75);">Many roots. One ecosystem.</p>
+    <a href="mailto:contact@yggdrasil-group.com" data-reveal="" style="margin-top: 8px; padding: 13px 28px; border: 1px solid rgba(198,162,92,.45); border-radius: 999px; font-size: 10px; letter-spacing: .3em; text-transform: uppercase;" style-hover="background: #C6A25C; color: #030304;">Nous écrire</a>
+  </div>
+</section>
+
+<footer style="position: relative; padding: 40px clamp(20px, 5vw, 60px); display: flex; flex-wrap: wrap; gap: 14px; justify-content: space-between; border-top: 1px solid rgba(237,234,228,.08); font-size: 9px; letter-spacing: .3em; text-transform: uppercase; color: rgba(237,234,228,.3);">
+  <span>© 2026 Yggdrasil Group</span>
+  <span>Everything begins beneath the surface</span>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { depthLabel: '00 — Origin' };
+
+  renderVals() {
+    return { depthLabel: this.state.depthLabel, roots: (el) => { this.cv = el; }, cloud: (el) => { this.cloudCv = el; } };
+  }
+
+  componentDidMount() {
+    this.reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.mouse = { x: -9999, y: -9999 };
+    addEventListener('pointermove', (e) => { this.mouse.x = e.clientX; this.mouse.y = e.clientY; }, { passive: true });
+    this.reveal();
+    this.cards();
+    this.labels();
+    requestAnimationFrame(() => this.start());
+    requestAnimationFrame(() => this.crossing());
+  }
+
+  componentWillUnmount() {
+    cancelAnimationFrame(this.raf);
+    cancelAnimationFrame(this.raf2);
+    if (this.io) this.io.disconnect();
+    if (this.mo) this.mo.disconnect();
+    if (this.cio) this.cio.disconnect();
+    removeEventListener('scroll', this.onScroll);
+  }
+
+  labels() {
+    const names = ['00 — Origin', '02 — Roots', '01 Odin la Science', '02 Saga', '03 Nua', '04 Nídhögg', '05 Verdandi', '06 Sleipnir', '07 Surtr', 'Yggdrasil'];
+    this.onScroll = () => {
+      const secs = document.querySelectorAll('section');
+      let idx = 0;
+      secs.forEach((s, i) => { if (s.getBoundingClientRect().top < innerHeight * 0.5) idx = i; });
+      const label = names[Math.min(idx, names.length - 1)];
+      if (label !== this.state.depthLabel) this.setState({ depthLabel: label });
+    };
+    addEventListener('scroll', this.onScroll, { passive: true });
+  }
+
+  reveal() {
+    const prep = (el) => {
+      if (el.dataset.ready) return;
+      el.dataset.ready = '1';
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(24px)';
+      el.style.transition = 'opacity 1.3s ease, transform 1.3s cubic-bezier(.16,.84,.24,1)';
+      this.io.observe(el);
+    };
+    this.io = new IntersectionObserver((es) => es.forEach((e, i) => {
+      if (!e.isIntersecting) return;
+      e.target.style.transitionDelay = (i * 140) + 'ms';
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'none';
+      this.io.unobserve(e.target);
+    }), { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
+    const scan = () => document.querySelectorAll('[data-reveal]').forEach(prep);
+    scan();
+    this.mo = new MutationObserver(scan);
+    this.mo.observe(document.body, { childList: true, subtree: true });
+  }
+
+  cards() {
+    const prep = (el) => {
+      if (el.dataset.ready) return;
+      el.dataset.ready = '1';
+      el.style.opacity = '0';
+      const side = el.parentElement.style.justifyContent === 'flex-end' ? 1 : -1;
+      el.style.transformOrigin = (side < 0 ? '0%' : '100%') + ' 50%';
+      el.style.transform = 'perspective(1500px) rotateY(' + (side * -20) + 'deg) translateX(' + (side * 60) + 'px) translateY(30px)';
+      this.cio.observe(el);
+    };
+    this.cio = new IntersectionObserver((es) => es.forEach((e) => {
+      const el = e.target;
+      if (e.isIntersecting) {
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+        el.style.borderColor = 'rgba(237,234,228,.24)';
+      } else if (el.dataset.ready) {
+        el.style.borderColor = 'rgba(237,234,228,.12)';
+      }
+    }), { threshold: 0.35 });
+    const scan = () => document.querySelectorAll('[data-card]').forEach(prep);
+    scan();
+    this.cmo = new MutationObserver(scan);
+    this.cmo.observe(document.body, { childList: true, subtree: true });
+  }
+
+  // nuage de particules : traversée d'un champ 3D projeté
+  crossing() {
+    const cv = this.cloudCv;
+    if (!cv) { requestAnimationFrame(() => this.crossing()); return; }
+    const ctx = cv.getContext('2d');
+    let W = 0, H = 0, pts = [];
+    const seed = () => {
+      const r = cv.getBoundingClientRect();
+      const dpr = Math.min(devicePixelRatio || 1, 2);
+      W = Math.max(r.width, 1); H = Math.max(r.height, 1);
+      cv.width = W * dpr; cv.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      let s = 77777;
+      const rnd = () => (s = (s * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff;
+      pts = Array.from({ length: 620 }, () => {
+        const branch = rnd();
+        // silhouette d'arbre : tronc étroit en bas, couronne large en haut
+        const ty = rnd();
+        const spread = 0.08 + Math.pow(ty, 1.7) * 0.92;
+        return {
+          x: (rnd() - 0.5) * spread,
+          y: 0.55 - ty,
+          z: rnd() * 6 + 0.4,
+          r: rnd() * 1.5 + 0.35,
+          p: rnd() * 6.283,
+          net: branch > 0.72
+        };
+      });
+    };
+    seed();
+    let rt;
+    addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(seed, 250); });
+    const loop = () => {
+      const r = cv.getBoundingClientRect();
+      if (r.bottom > -100 && r.top < innerHeight + 100) {
+        const prog = Math.min(1, Math.max(0, (innerHeight - r.top) / (r.height + innerHeight)));
+        const t = performance.now() / 1000;
+        ctx.clearRect(0, 0, W, H);
+        const cam = 6.2 - prog * 5.6;
+        const proj = [];
+        for (const p of pts) {
+          const z = p.z - (6.2 - cam);
+          if (z <= 0.08) continue;
+          const k = (H * 0.9) / z;
+          const px = W / 2 + p.x * k + (this.mouse.x > 0 ? (this.mouse.x / innerWidth - .5) * -26 : 0);
+          const py = H / 2 + p.y * k;
+          if (px < -60 || px > W + 60 || py < -60 || py > H + 60) continue;
+          const a = Math.min(1, (1.6 / z)) * (0.35 + 0.5 * Math.abs(Math.sin(t * 0.5 + p.p)));
+          ctx.beginPath();
+          ctx.arc(px, py, p.r * Math.min(2.4, 1.4 / z + 0.35), 0, 6.283);
+          ctx.fillStyle = 'rgba(240,236,224,' + a.toFixed(3) + ')';
+          ctx.fill();
+          if (p.net) proj.push({ x: px, y: py, a });
+        }
+        for (let i = 0; i < proj.length; i++) {
+          for (let j = i + 1; j < proj.length; j++) {
+            const dx = proj[i].x - proj[j].x, dy = proj[i].y - proj[j].y;
+            const d = Math.hypot(dx, dy);
+            if (d < 108) {
+              ctx.beginPath();
+              ctx.moveTo(proj[i].x, proj[i].y);
+              ctx.lineTo(proj[j].x, proj[j].y);
+              ctx.strokeStyle = 'rgba(198,162,92,' + (0.16 * (1 - d / 108)).toFixed(3) + ')';
+              ctx.lineWidth = 0.6;
+              ctx.stroke();
+            }
+          }
+        }
+      }
+      this.raf2 = requestAnimationFrame(loop);
+    };
+    loop();
+  }
+
+  // réseau de racines : coordonnées en espace document, dessin progressif selon le scroll
+  build(w, h) {
+    let s = 20260816;
+    const rnd = () => (s = (s * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff;
+    const segs = [];
+    const anchors = [];
+    document.querySelectorAll('[data-card]').forEach((el) => {
+      const r = el.getBoundingClientRect();
+      anchors.push({ x: r.left + r.width / 2, y: r.top + scrollY + r.height / 2, side: r.left > w / 2 ? -1 : 1 });
+    });
+    const grow = (x, y, ang, len, depth, wid) => {
+      if (depth <= 0 || y > h) return;
+      const steps = 9;
+      let px = x, py = y, a = ang;
+      const pts = [{ x: px, y: py }];
+      for (let i = 0; i < steps; i++) {
+        a += (rnd() - 0.5) * 0.34;
+        const nx = px + Math.cos(a) * (len / steps);
+        const ny = py + Math.sin(a) * (len / steps);
+        pts.push({ x: nx, y: ny });
+        // radicelles
+        if (depth > 1 && rnd() > 0.55) {
+          const ha = a + (rnd() > .5 ? 1 : -1) * (0.7 + rnd() * 0.7);
+          const hl = len * (0.05 + rnd() * 0.09);
+          segs.push({ pts: [{ x: nx, y: ny }, { x: nx + Math.cos(ha) * hl, y: ny + Math.sin(ha) * hl }], w: wid * 0.28, d: 1, hair: 1 });
+        }
+        px = nx; py = ny;
+      }
+      segs.push({ pts, w: wid, d: depth, hair: 0 });
+      const kids = depth > 3 ? 2 : (rnd() > 0.4 ? 2 : 1);
+      for (let k = 0; k < kids; k++) {
+        grow(px, py, a + (k === 0 ? -1 : 1) * (0.3 + rnd() * 0.6), len * (0.62 + rnd() * 0.3), depth - 1, wid * 0.68);
+      }
+    };
+    grow(w / 2, innerHeight * 0.55, Math.PI / 2, innerHeight * 0.5, 6, 2.1);
+    anchors.forEach((an, i) => {
+      const from = { x: w / 2 + (rnd() - 0.5) * w * 0.18, y: an.y - innerHeight * 0.55 };
+      grow(from.x, from.y, Math.PI / 2 + an.side * 0.55, innerHeight * 0.42, 5, 1.7);
+      grow(an.x - an.side * 40, an.y, Math.PI / 2 + (i % 2 ? 0.3 : -0.3), innerHeight * 0.4, 4, 1.2);
+    });
+    for (let i = 0; i < 5; i++) grow(w * (0.15 + rnd() * 0.7), h * (0.2 + rnd() * 0.7), Math.PI / 2 + (rnd() - .5), innerHeight * 0.3, 3, 0.9);
+    this.dust = Array.from({ length: 220 }, () => ({ x: rnd() * w, y: rnd() * h, r: rnd() * 1.3 + 0.3, z: 0.3 + rnd() * 0.8, p: rnd() * 6.28 }));
+    return segs;
+  }
+
+  start() {
+    const cv = this.cv;
+    if (!cv) { requestAnimationFrame(() => this.start()); return; }
+    const ctx = cv.getContext('2d');
+    let W = 0, H = 0, docH = 0, segs = [];
+    const size = () => {
+      const dpr = Math.min(devicePixelRatio || 1, 2);
+      W = innerWidth; H = innerHeight;
+      cv.width = W * dpr; cv.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      docH = document.documentElement.scrollHeight;
+      segs = this.build(W, docH);
+    };
+    size();
+    let rt;
+    addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(size, 250); });
+    let front = 0, camX = 0, camS = 1;
+    const draw = () => {
+      const sc = scrollY;
+      const target = sc + H * 0.92;
+      front += (target - front) * 0.06;
+      const prog = Math.min(1, sc / Math.max(docH - H, 1));
+      camX += ((this.mouse.x > 0 ? (this.mouse.x / W - 0.5) * -34 : 0) - camX) * 0.04;
+      camS += ((1 + prog * 0.1) - camS) * 0.03;
+      ctx.clearRect(0, 0, W, H);
+      ctx.save();
+      ctx.translate(W / 2 + camX, 0);
+      ctx.scale(camS, camS);
+      ctx.translate(-W / 2, 0);
+      const t = performance.now() / 1000;
+      ctx.lineCap = 'round';
+      for (const s of segs) {
+        const p0 = s.pts[0], pl = s.pts[s.pts.length - 1];
+        const top = Math.min(p0.y, pl.y), bot = Math.max(p0.y, pl.y);
+        if (bot - sc < -240 || top - sc > H + 240) continue;
+        const span = Math.max(pl.y - p0.y, 1);
+        let f = Math.max(0, Math.min(1, (front - p0.y) / span));
+        if (pl.y < p0.y) f = front > p0.y ? 1 : 0;
+        if (f <= 0.004) continue;
+        const par = 1 + (6 - s.d) * 0.014;
+        const sway = this.reduced ? 0 : Math.sin(t * 0.45 + p0.y * 0.004) * (7 - s.d) * 0.8;
+        const P = s.pts.map(p => ({ x: p.x + sway, y: (p.y - sc) * par }));
+        const cx = (P[0].x + P[P.length - 1].x) / 2, cy = (P[0].y + P[P.length - 1].y) / 2;
+        const md = Math.hypot(cx - this.mouse.x, cy - this.mouse.y);
+        const near = md < 190 && md > 0.001 ? (1 - md / 190) : 0;
+        const push = near > 0 ? ((cx - this.mouse.x) / md) * near * 11 : 0;
+        const last = Math.max(1, Math.ceil((P.length - 1) * f));
+        const g = ctx.createLinearGradient(P[0].x, P[0].y, P[last].x, P[last].y);
+        const base = 0.045 + s.d * 0.02 + near * 0.28;
+        g.addColorStop(0, 'rgba(226,231,238,' + (base * 0.5).toFixed(3) + ')');
+        g.addColorStop(0.65, 'rgba(226,231,238,' + base.toFixed(3) + ')');
+        g.addColorStop(1, 'rgba(244,232,205,' + Math.min(0.75, base + 0.22 + near * 0.2).toFixed(3) + ')');
+        ctx.beginPath();
+        ctx.moveTo(P[0].x + push, P[0].y);
+        for (let i = 1; i < last; i++) {
+          const a = P[i], b = P[i + 1] || P[i];
+          ctx.quadraticCurveTo(a.x + push, a.y, (a.x + b.x) / 2 + push, (a.y + b.y) / 2);
+        }
+        const endP = P[last];
+        ctx.lineTo(endP.x + push, endP.y);
+        ctx.lineWidth = s.w * (1 + near * 0.6);
+        ctx.strokeStyle = g;
+        ctx.shadowBlur = s.hair ? 4 : 14 + near * 30;
+        ctx.shadowColor = 'rgba(198,162,92,' + (0.16 + near * 0.5).toFixed(2) + ')';
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+        // pointe lumineuse pendant la croissance
+        if (!s.hair && f > 0.02 && f < 0.995) {
+          ctx.beginPath();
+          ctx.arc(endP.x + push, endP.y, 1.9 + s.w * 0.5, 0, 6.283);
+          ctx.fillStyle = 'rgba(246,238,216,.75)';
+          ctx.shadowBlur = 16; ctx.shadowColor = 'rgba(198,162,92,.7)';
+          ctx.fill(); ctx.shadowBlur = 0;
+        }
+      }
+      for (const p of this.dust) {
+        const py = ((p.y - sc * p.z) % (H + 400) + (H + 400)) % (H + 400) - 200;
+        ctx.beginPath();
+        ctx.arc(p.x, py, p.r, 0, 6.283);
+        ctx.fillStyle = 'rgba(237,234,228,' + (0.06 + 0.14 * Math.abs(Math.sin(t * 0.4 + p.p))).toFixed(3) + ')';
+        ctx.fill();
+      }
+      ctx.restore();
+      this.raf = requestAnimationFrame(draw);
+    };
+    draw();
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap" rel="stylesheet" />
+<style>
+  html { background: #030304; scroll-behavior: smooth; }
+  body { margin: 0; background: #030304; color: #EDEAE4; font-family: Jost, Helvetica, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  ::selection { background: #C6A25C; color: #030304; }
+  a { color: #EDEAE4; text-decoration: none; transition: color .5s ease, border-color .5s ease; }
+  a:hover { color: #C6A25C; }
+  @keyframes ygg-float { 0%,100% { transform: translateY(-5px); } 50% { transform: translateY(5px); } }
+  @keyframes ygg-rise { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #030304; }
+  ::-webkit-scrollbar-thumb { background: #1e1e22; }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+</style>
+</helmet>
+
+<canvas ref="{{ veins }}" style="position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;"></canvas>
+<div style="position: fixed; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(110% 60% at 50% 0%, rgba(200,68,58,.10), transparent 62%);"></div>
+
+<div style="position: relative; z-index: 2;">
+
+<header style="position: sticky; top: 0; z-index: 30; display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 18px clamp(18px, 4vw, 52px); font-size: 10px; letter-spacing: .3em; text-transform: uppercase; color: rgba(237,234,228,.55); background: linear-gradient(to bottom, rgba(3,3,4,.9), rgba(3,3,4,.2)); backdrop-filter: blur(10px);">
+  <a href="Yggdrasil Racines.dc.html" style="display: flex; align-items: center; gap: 12px; color: rgba(237,234,228,.8);">
+    <img src="assets/mark-yggdrasil.png" alt="Yggdrasil" style="width: 22px; height: 22px; object-fit: contain;" />
+    <span>← Réseau</span>
+  </a>
+  <span>Entité 07</span>
+</header>
+
+<section style="position: relative; min-height: 82svh; display: grid; place-items: center; padding: clamp(60px, 10vh, 120px) clamp(20px, 5vw, 60px);">
+  <div style="max-width: 900px; display: grid; gap: clamp(22px, 4vh, 40px); justify-items: center; text-align: center;">
+    <img src="assets/mark-surtr.png" alt="Surtr" style="width: clamp(96px, 12vw, 150px); height: clamp(96px, 12vw, 150px); object-fit: contain; animation: ygg-float 10s ease-in-out infinite;" />
+    <div style="display: grid; gap: 16px; justify-items: center;">
+      <span style="font-size: 10px; letter-spacing: .42em; text-transform: uppercase; color: #C8443A; animation: ygg-rise 1.6s ease both;">New gen streetwear</span>
+      <h1 style="margin: 0; font-size: clamp(38px, 7vw, 92px); font-weight: 200; letter-spacing: .06em; line-height: 1; animation: ygg-rise 1.8s ease .15s both;">Surtr</h1>
+    </div>
+    <p style="margin: 0; max-width: 56ch; font-size: clamp(16px, 1.4vw, 21px); line-height: 1.75; color: rgba(237,234,228,.66); text-wrap: pretty; animation: ygg-rise 2s ease .3s both;">Une marque de vêtements nouvelle génération : noir, rouge, broderies, matières en mouvement.</p>
+  </div>
+</section>
+
+<section style="position: relative; padding: clamp(60px, 10vh, 120px) clamp(20px, 5vw, 60px); border-top: 1px solid rgba(237,234,228,.08);">
+  <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: clamp(34px, 5vw, 80px);">
+    <div data-reveal="" style="display: grid; gap: 18px; align-content: start;">
+      <span style="font-size: 10px; letter-spacing: .4em; text-transform: uppercase; color: rgba(237,234,228,.4);">Mission</span>
+      <p style="margin: 0; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(22px, 2.6vw, 36px); line-height: 1.35; color: #EDEAE4; text-wrap: pretty;">Habiller une génération qui ne demande pas la permission.</p>
+    </div>
+    <div data-reveal="" style="display: grid; gap: 20px; align-content: start;">
+      <span style="font-size: 10px; letter-spacing: .4em; text-transform: uppercase; color: rgba(237,234,228,.4);">Contexte</span>
+      <p style="margin: 0; font-size: clamp(15px, 1.2vw, 18px); line-height: 1.8; color: rgba(237,234,228,.6); text-wrap: pretty;">Le streetwear est saturé de logos sans propos. Surtr construit des pièces travaillées — coupes, broderies, matières — en séries courtes assumées.</p>
+    </div>
+  </div>
+</section>
+
+<section style="position: relative; padding: 0 clamp(20px, 5vw, 60px) clamp(60px, 10vh, 120px);">
+  <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1px; background: rgba(237,234,228,.09);">
+    <div data-reveal="" style="background: #030304; padding: clamp(26px, 3vw, 44px); display: grid; gap: 14px; align-content: start;">
+      <span style="font-size: 10px; letter-spacing: .3em; text-transform: uppercase; color: #C8443A;">Pôle A</span>
+      <h3 style="margin: 0; font-size: clamp(21px, 2vw, 28px); font-weight: 300; letter-spacing: .04em;">Collections</h3>
+      <p style="margin: 0; font-size: 14px; line-height: 1.75; color: rgba(237,234,228,.58);">Séries courtes, coupes travaillées, broderies et finitions.</p>
+    </div>
+    <div data-reveal="" style="background: #030304; padding: clamp(26px, 3vw, 44px); display: grid; gap: 14px; align-content: start;">
+      <span style="font-size: 10px; letter-spacing: .3em; text-transform: uppercase; color: #C8443A;">Pôle B</span>
+      <h3 style="margin: 0; font-size: clamp(21px, 2vw, 28px); font-weight: 300; letter-spacing: .04em;">Communauté</h3>
+      <p style="margin: 0; font-size: 14px; line-height: 1.75; color: rgba(237,234,228,.58);">Drops, collaborations, retours terrain intégrés au design.</p>
+    </div>
+    <div data-reveal="" style="background: #030304; padding: clamp(26px, 3vw, 44px); display: grid; gap: 14px; align-content: start;">
+      <span style="font-size: 10px; letter-spacing: .3em; text-transform: uppercase; color: #C8443A;">Socle</span>
+      <h3 style="margin: 0; font-size: clamp(21px, 2vw, 28px); font-weight: 300; letter-spacing: .04em;">Infrastructure Yggdrasil</h3>
+      <p style="margin: 0; font-size: 14px; line-height: 1.75; color: rgba(237,234,228,.58);">Identité, hébergement, sécurité et ressources partagées avec les autres entités du groupe.</p>
+    </div>
+  </div>
+</section>
+
+<section style="position: relative; padding: 0 clamp(20px, 5vw, 60px) clamp(70px, 12vh, 140px);">
+  <div data-reveal="" style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 10px;">
+    <span style="padding: 8px 16px; border: 1px solid rgba(200,68,58,.28); border-radius: 999px; font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: rgba(237,234,228,.62);">Broderie</span>
+    <span style="padding: 8px 16px; border: 1px solid rgba(200,68,58,.28); border-radius: 999px; font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: rgba(237,234,228,.62);">Collections</span>
+    <span style="padding: 8px 16px; border: 1px solid rgba(200,68,58,.28); border-radius: 999px; font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: rgba(237,234,228,.62);">Drops</span>
+    <span style="padding: 8px 16px; border: 1px solid rgba(200,68,58,.28); border-radius: 999px; font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: rgba(237,234,228,.62);">Textile</span>
+  </div>
+</section>
+
+<footer style="position: relative; padding: clamp(40px, 7vh, 80px) clamp(20px, 5vw, 60px) 44px; border-top: 1px solid rgba(237,234,228,.08); display: grid; gap: 26px;">
+  <div style="max-width: 1200px; margin: 0 auto; width: 100%; display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; align-items: center;">
+    <a href="Entite Odin.dc.html" style="display: grid; gap: 8px;">
+      <span style="font-size: 9px; letter-spacing: .34em; text-transform: uppercase; color: rgba(237,234,228,.38);">Entité suivante</span>
+      <span style="font-size: clamp(20px, 2.4vw, 30px); font-weight: 200; letter-spacing: .05em;">Odin la Science →</span>
+    </a>
+    <a href="Yggdrasil Racines.dc.html" style="padding: 12px 26px; border: 1px solid rgba(198,162,92,.4); border-radius: 999px; font-size: 10px; letter-spacing: .3em; text-transform: uppercase;" style-hover="background: #C6A25C; color: #030304;">Retour au réseau</a>
+  </div>
+  <div style="max-width: 1200px; margin: 0 auto; width: 100%; font-size: 9px; letter-spacing: .3em; text-transform: uppercase; color: rgba(237,234,228,.28);">© 2026 Yggdrasil Group</div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  renderVals() { return { veins: (el) => { this.cv = el; } }; }
+
+  componentDidMount() {
+    this.reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.mouse = { x: -9999, y: -9999 };
+    addEventListener('pointermove', (e) => { this.mouse.x = e.clientX; this.mouse.y = e.clientY; }, { passive: true });
+    this.reveal();
+    requestAnimationFrame(() => this.start());
+  }
+
+  componentWillUnmount() {
+    cancelAnimationFrame(this.raf);
+    if (this.io) this.io.disconnect();
+    if (this.mo) this.mo.disconnect();
+  }
+
+  reveal() {
+    const prep = (el) => {
+      if (el.dataset.ready) return;
+      el.dataset.ready = '1';
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(22px)';
+      el.style.transition = 'opacity 1.2s ease, transform 1.2s cubic-bezier(.16,.84,.24,1)';
+      this.io.observe(el);
+    };
+    this.io = new IntersectionObserver((es) => es.forEach((e, i) => {
+      if (!e.isIntersecting) return;
+      e.target.style.transitionDelay = (i * 130) + 'ms';
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'none';
+      this.io.unobserve(e.target);
+    }), { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+    const scan = () => document.querySelectorAll('[data-reveal]').forEach(prep);
+    scan();
+    this.mo = new MutationObserver(scan);
+    this.mo.observe(document.body, { childList: true, subtree: true });
+  }
+
+  start() {
+    const cv = this.cv;
+    if (!cv) { requestAnimationFrame(() => this.start()); return; }
+    const ctx = cv.getContext('2d');
+    const hue = getComputedStyle(document.body).getPropertyValue('--x') || '';
+    let W = 0, H = 0, pts = [];
+    const seed = () => {
+      const dpr = Math.min(devicePixelRatio || 1, 2);
+      W = innerWidth; H = innerHeight;
+      cv.width = W * dpr; cv.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      pts = Array.from({ length: 110 }, () => ({
+        x: Math.random() * W, y: Math.random() * H,
+        vx: (Math.random() - .5) * 0.1, vy: (Math.random() - .5) * 0.1,
+        r: Math.random() * 1.1 + 0.3, p: Math.random() * 6.283
+      }));
+    };
+    seed();
+    let rt;
+    addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(seed, 250); });
+    const loop = () => {
+      const t = performance.now() / 1000;
+      ctx.clearRect(0, 0, W, H);
+      for (const p of pts) {
+        if (!this.reduced) { p.x += p.vx; p.y += p.vy; }
+        if (p.x < 0 || p.x > W) p.vx *= -1;
+        if (p.y < 0 || p.y > H) p.vy *= -1;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, 6.283);
+        ctx.fillStyle = 'rgba(233,238,246,' + (0.08 + 0.16 * Math.abs(Math.sin(t * 0.4 + p.p))).toFixed(3) + ')';
+        ctx.fill();
+      }
+      for (let i = 0; i < pts.length; i++) {
+        for (let j = i + 1; j < pts.length; j++) {
+          const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y;
+          const d = Math.hypot(dx, dy);
+          if (d < 130) {
+            const near = Math.hypot((pts[i].x + pts[j].x) / 2 - this.mouse.x, (pts[i].y + pts[j].y) / 2 - this.mouse.y) < 180 ? 0.18 : 0;
+            ctx.beginPath();
+            ctx.moveTo(pts[i].x, pts[i].y);
+            ctx.lineTo(pts[j].x, pts[j].y);
+            ctx.strokeStyle = 'rgba(200,68,58,' + (0.09 * (1 - d / 130) + near).toFixed(3) + ')';
+            ctx.lineWidth = 0.6;
+            ctx.stroke();
+          }
+        }
+      }
+      this.raf = requestAnimationFrame(loop);
+    };
+    loop();
+  }
+}
+</script>
+</body>
+</html>
