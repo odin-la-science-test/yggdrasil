@@ -1,0 +1,100 @@
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+  background: #0b0c0b;
+  color: #edede8;
+  font-family: Manrope, system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: #edede8;
+  color: #0b0c0b;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+input,
+textarea,
+select {
+  font-family: Manrope, system-ui, sans-serif;
+}
+
+::placeholder {
+  color: rgba(237, 237, 232, 0.35);
+}
+
+@keyframes ygg-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+[data-cards-grid] {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 700px) {
+  [data-cards-grid] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Hover states — inline styles handle layout/color, these handle :hover only */
+.ygg-link-accent:hover {
+  color: var(--ygg-accent, oklch(0.78 0.1 175));
+}
+
+.ygg-btn-light:hover {
+  transform: translateY(-2px);
+  background: #ffffff;
+}
+
+.ygg-btn-outline-dark:hover {
+  border-color: rgba(237, 237, 232, 0.6);
+  transform: translateY(-2px);
+}
+
+.ygg-btn-outline-light:hover {
+  border-color: rgba(11, 12, 11, 0.6);
+  transform: translateY(-2px);
+}
+
+.ygg-btn-solid:hover {
+  transform: translateY(-2px);
+}
+
+.ygg-pill-email:hover {
+  border-color: rgba(237, 237, 232, 0.7);
+}
+
+.ygg-branch-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(11, 12, 11, 0.45);
+}
+
+.ygg-card:hover {
+  transform: translateY(-6px);
+}
+
+.ygg-card-cta:hover {
+  border-color: var(--ygg-accent, #edede8);
+}
+
+.ygg-field:focus {
+  border-color: oklch(0.8 0.07 85) !important;
+}
