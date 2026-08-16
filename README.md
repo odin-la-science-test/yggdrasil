@@ -99,7 +99,7 @@ graph TD
 <summary><strong>Détail de chaque entité</strong></summary>
 
 ### 01 — Odin la Science
-Infrastructure numérique dédiée à la science, à la connaissance et aux outils de recherche. Deux pôles : **Munin Atlas**, base de savoirs scientifiques (données, publications, analyses), et **Huginn Lab**, outil de gestion de laboratoire (modules scientifiques, planification, suivi des équipements).
+Infrastructure numérique dédiée à la science, à la connaissance et aux outils de recherche. Deux pôles : **Munin Atlas**, base de savoirs scientifiques (données, publications, analyses), et **Hugin Lab**, outil de gestion de laboratoire (modules scientifiques, planification, suivi des équipements).
 
 ### 02 — Saga
 Préserve, organise et transmet le patrimoine culturel, historique et muséal. Trois volets : cartes & fonds anciens, manuscrits & publications, objets & artefacts — au service des institutions comme du public.
