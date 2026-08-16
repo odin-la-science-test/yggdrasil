@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="./support.js"></script>
+<script src="/static-assets/support.js"></script>
 </head>
 <body>
 <x-dc>
@@ -52,7 +52,7 @@
     renderer.domElement.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0;transition:opacity 2.6s ease';
     host.replaceChildren(renderer.domElement); size();
     addEventListener('resize', size);
-    const gltf = await new GLTFLoader().loadAsync('assets/yggdrasil.glb');
+    const gltf = await new GLTFLoader().loadAsync('/static-assets/yggdrasil.glb');
     const model = gltf.scene;
     model.traverse(o => { if (o.isMesh && o.material) { o.material.metalness = 0.86; o.material.roughness = 0.26; } });
     const box = new THREE.Box3().setFromObject(model);
@@ -83,7 +83,7 @@
 
 <header style="position: fixed; top: 0; left: 0; right: 0; z-index: 40; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 18px clamp(18px, 4vw, 52px); font-size: 10px; letter-spacing: .3em; text-transform: uppercase; color: rgba(237,234,228,.55); background: linear-gradient(to bottom, rgba(3,3,4,.85), transparent);">
   <a href="#origin" style="display: flex; align-items: center; gap: 12px; color: rgba(237,234,228,.8);">
-    <img src="assets/mark-yggdrasil.png" alt="Yggdrasil" style="width: 24px; height: 24px; object-fit: contain;" />
+    <img src="/static-assets/mark-yggdrasil.png" alt="Yggdrasil" style="width: 24px; height: 24px; object-fit: contain;" />
     <span>Yggdrasil Group</span>
   </a>
   <span style="font-variant-numeric: tabular-nums;">{{ depthLabel }}</span>
@@ -92,7 +92,7 @@
 <section id="origin" style="position: relative; height: 100svh; overflow: hidden; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: clamp(12px, 2.4vh, 30px); padding: clamp(56px, 8vh, 80px) clamp(20px, 5vw, 60px) 26px; text-align: center;">
   <span style="width: 7px; height: 7px; border-radius: 50%; background: #F4EEDF; box-shadow: 0 0 26px 8px rgba(244,238,223,.5); animation: ygg-seed 4s cubic-bezier(.2,.8,.2,1) both;"></span>
   <div id="ygg-root-3d" style="position: relative; flex: 1 1 auto; min-height: 0; width: min(56vh, 540px); max-height: min(42vh, 380px); max-width: 100%;">
-    <img src="assets/yggdrasil-cut.png" alt="Emblème Yggdrasil" style="position: absolute; inset: 0; margin: auto; width: 100%; height: 100%; object-fit: contain; opacity: .8; animation: ygg-float 10s ease-in-out infinite;" />
+    <img src="/static-assets/yggdrasil-cut.png" alt="Emblème Yggdrasil" style="position: absolute; inset: 0; margin: auto; width: 100%; height: 100%; object-fit: contain; opacity: .8; animation: ygg-float 10s ease-in-out infinite;" />
   </div>
   <h1 style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); margin: 0;">Yggdrasil Group</h1>
   <p style="margin: 0; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(17px, 2vw, 27px); color: rgba(237,234,228,.72); animation: ygg-rise 2.6s cubic-bezier(.16,.84,.24,1) 2.7s both;">Everything begins beneath the surface.</p>
@@ -115,7 +115,7 @@
     <article data-card="" style="position: relative; width: min(560px, 100%); display: grid; gap: 26px; padding: clamp(28px, 3.4vw, 48px); border: 1px solid rgba(237,234,228,.12); border-radius: 3px; background: linear-gradient(155deg, rgba(237,234,228,.055), rgba(3,3,4,.72)); backdrop-filter: blur(16px); box-shadow: 0 40px 120px -60px rgba(137,167,214,.5); transition: border-color .8s ease, box-shadow .8s ease, transform .8s cubic-bezier(.2,.7,.2,1);">
       <div style="display: flex; align-items: center; justify-content: space-between; gap: 18px;">
         <span style="font-size: 11px; letter-spacing: .34em; color: rgba(237,234,228,.4);">01</span>
-        <img src="assets/mark-odin.png" alt="Odin la Science" style="width: 52px; height: 52px; object-fit: contain; animation: ygg-float 9s ease-in-out infinite;" />
+        <img src="/static-assets/mark-odin.png" alt="Odin la Science" style="width: 52px; height: 52px; object-fit: contain; animation: ygg-float 9s ease-in-out infinite;" />
       </div>
       <div>
         <h3 style="margin: 0; font-size: clamp(28px, 3.4vw, 46px); font-weight: 200; letter-spacing: .04em;">Odin la Science</h3>
@@ -138,7 +138,7 @@
     <article data-card="" style="position: relative; width: min(560px, 100%); display: grid; gap: 26px; padding: clamp(28px, 3.4vw, 48px); border: 1px solid rgba(237,234,228,.12); border-radius: 3px; background: linear-gradient(155deg, rgba(237,234,228,.055), rgba(3,3,4,.72)); backdrop-filter: blur(16px); box-shadow: 0 40px 120px -60px rgba(198,162,92,.5); transition: border-color .8s ease, box-shadow .8s ease, transform .8s cubic-bezier(.2,.7,.2,1);">
       <div style="display: flex; align-items: center; justify-content: space-between; gap: 18px;">
         <span style="font-size: 11px; letter-spacing: .34em; color: rgba(237,234,228,.4);">02</span>
-        <img src="assets/mark-saga.png" alt="Saga" style="width: 52px; height: 52px; object-fit: contain; animation: ygg-float 10s ease-in-out infinite;" />
+        <img src="/static-assets/mark-saga.png" alt="Saga" style="width: 52px; height: 52px; object-fit: contain; animation: ygg-float 10s ease-in-out infinite;" />
       </div>
       <div>
         <h3 style="margin: 0; font-size: clamp(28px, 3.4vw, 46px); font-weight: 200; letter-spacing: .04em;">Saga</h3>
@@ -161,7 +161,7 @@
     <article data-card="" style="position: relative; width: min(560px, 100%); display: grid; gap: 26px; padding: clamp(28px, 3.4vw, 48px); border: 1px solid rgba(237,234,228,.12); border-radius: 3px; background: linear-gradient(155deg, rgba(237,234,228,.055), rgba(3,3,4,.72)); backdrop-filter: blur(16px); box-shadow: 0 40px 120px -60px rgba(232,106,138,.45); transition: border-color .8s ease, box-shadow .8s ease, transform .8s cubic-bezier(.2,.7,.2,1);">
       <div style="display: flex; align-items: center; justify-content: space-between; gap: 18px;">
         <span style="font-size: 11px; letter-spacing: .34em; color: rgba(237,234,228,.4);">03</span>
-        <img src="assets/nua.png" alt="Nua" style="width: 48px; height: 48px; object-fit: contain; border-radius: 22%; animation: ygg-float 8.5s ease-in-out infinite;" />
+        <img src="/static-assets/nua.png" alt="Nua" style="width: 48px; height: 48px; object-fit: contain; border-radius: 22%; animation: ygg-float 8.5s ease-in-out infinite;" />
       </div>
       <div>
         <h3 style="margin: 0; font-size: clamp(28px, 3.4vw, 46px); font-weight: 200; letter-spacing: .04em;">Nua</h3>
@@ -183,7 +183,7 @@
     <article data-card="" style="position: relative; width: min(560px, 100%); display: grid; gap: 26px; padding: clamp(28px, 3.4vw, 48px); border: 1px solid rgba(237,234,228,.12); border-radius: 3px; background: linear-gradient(155deg, rgba(237,234,228,.055), rgba(3,3,4,.72)); backdrop-filter: blur(16px); box-shadow: 0 40px 120px -60px rgba(127,160,122,.45); transition: border-color .8s ease, box-shadow .8s ease, transform .8s cubic-bezier(.2,.7,.2,1);">
       <div style="display: flex; align-items: center; justify-content: space-between; gap: 18px;">
         <span style="font-size: 11px; letter-spacing: .34em; color: rgba(237,234,228,.4);">04</span>
-        <img src="assets/mark-nidhogg.png" alt="Nídhögg" style="width: 52px; height: 52px; object-fit: contain; animation: ygg-float 9.5s ease-in-out infinite;" />
+        <img src="/static-assets/mark-nidhogg.png" alt="Nídhögg" style="width: 52px; height: 52px; object-fit: contain; animation: ygg-float 9.5s ease-in-out infinite;" />
       </div>
       <div>
         <h3 style="margin: 0; font-size: clamp(28px, 3.4vw, 46px); font-weight: 200; letter-spacing: .04em;">Nídhögg</h3>
@@ -205,7 +205,7 @@
     <article data-card="" style="position: relative; width: min(560px, 100%); display: grid; gap: 26px; padding: clamp(28px, 3.4vw, 48px); border: 1px solid rgba(237,234,228,.12); border-radius: 3px; background: linear-gradient(155deg, rgba(237,234,228,.055), rgba(3,3,4,.72)); backdrop-filter: blur(16px); box-shadow: 0 40px 120px -60px rgba(200,185,166,.4); transition: border-color .8s ease, box-shadow .8s ease, transform .8s cubic-bezier(.2,.7,.2,1);">
       <div style="display: flex; align-items: center; justify-content: space-between; gap: 18px;">
         <span style="font-size: 11px; letter-spacing: .34em; color: rgba(237,234,228,.4);">05</span>
-        <img src="assets/mark-verdandi.png" alt="Verdandi" style="width: 52px; height: 52px; object-fit: contain; filter: brightness(1.35) saturate(1.1); animation: ygg-float 9s ease-in-out infinite;" />
+        <img src="/static-assets/mark-verdandi.png" alt="Verdandi" style="width: 52px; height: 52px; object-fit: contain; filter: brightness(1.35) saturate(1.1); animation: ygg-float 9s ease-in-out infinite;" />
       </div>
       <div>
         <h3 style="margin: 0; font-size: clamp(28px, 3.4vw, 46px); font-weight: 200; letter-spacing: .04em;">Verdandi</h3>
@@ -227,7 +227,7 @@
     <article data-card="" style="position: relative; width: min(560px, 100%); display: grid; gap: 26px; padding: clamp(28px, 3.4vw, 48px); border: 1px solid rgba(237,234,228,.12); border-radius: 3px; background: linear-gradient(155deg, rgba(237,234,228,.055), rgba(3,3,4,.72)); backdrop-filter: blur(16px); box-shadow: 0 40px 120px -60px rgba(185,192,199,.4); transition: border-color .8s ease, box-shadow .8s ease, transform .8s cubic-bezier(.2,.7,.2,1);">
       <div style="display: flex; align-items: center; justify-content: space-between; gap: 18px;">
         <span style="font-size: 11px; letter-spacing: .34em; color: rgba(237,234,228,.4);">06</span>
-        <img src="assets/mark-sleipnir.png" alt="Sleipnir" style="width: 52px; height: 52px; object-fit: contain; animation: ygg-float 10.5s ease-in-out infinite;" />
+        <img src="/static-assets/mark-sleipnir.png" alt="Sleipnir" style="width: 52px; height: 52px; object-fit: contain; animation: ygg-float 10.5s ease-in-out infinite;" />
       </div>
       <div>
         <h3 style="margin: 0; font-size: clamp(28px, 3.4vw, 46px); font-weight: 200; letter-spacing: .04em;">Sleipnir</h3>
@@ -249,7 +249,7 @@
     <article data-card="" style="position: relative; width: min(560px, 100%); display: grid; gap: 26px; padding: clamp(28px, 3.4vw, 48px); border: 1px solid rgba(237,234,228,.12); border-radius: 3px; background: linear-gradient(155deg, rgba(237,234,228,.055), rgba(3,3,4,.72)); backdrop-filter: blur(16px); box-shadow: 0 40px 120px -60px rgba(200,68,58,.45); transition: border-color .8s ease, box-shadow .8s ease, transform .8s cubic-bezier(.2,.7,.2,1);">
       <div style="display: flex; align-items: center; justify-content: space-between; gap: 18px;">
         <span style="font-size: 11px; letter-spacing: .34em; color: rgba(237,234,228,.4);">07</span>
-        <img src="assets/mark-surtr.png" alt="Surtr" style="width: 52px; height: 52px; object-fit: contain; filter: brightness(1.4); animation: ygg-float 8.8s ease-in-out infinite;" />
+        <img src="/static-assets/mark-surtr.png" alt="Surtr" style="width: 52px; height: 52px; object-fit: contain; filter: brightness(1.4); animation: ygg-float 8.8s ease-in-out infinite;" />
       </div>
       <div>
         <h3 style="margin: 0; font-size: clamp(28px, 3.4vw, 46px); font-weight: 200; letter-spacing: .04em;">Surtr</h3>
@@ -278,7 +278,7 @@
 
 <section id="final" style="position: relative; min-height: 150svh; display: grid; place-items: center; padding: clamp(80px, 12vh, 160px) clamp(20px, 5vw, 60px);">
   <div style="position: sticky; top: 22vh; text-align: center; display: grid; gap: clamp(22px, 4vh, 40px); justify-items: center;">
-    <img src="assets/mark-yggdrasil.png" alt="Yggdrasil Group" data-reveal="" style="width: clamp(110px, 13vw, 190px); opacity: .9;" />
+    <img src="/static-assets/mark-yggdrasil.png" alt="Yggdrasil Group" data-reveal="" style="width: clamp(110px, 13vw, 190px); opacity: .9;" />
     <h2 data-reveal="" style="margin: 0; font-size: clamp(26px, 5vw, 66px); font-weight: 200; letter-spacing: .26em; text-transform: uppercase; line-height: 1;">Yggdrasil Group</h2>
     <p data-reveal="" style="margin: 0; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(19px, 2.4vw, 32px); color: rgba(237,234,228,.75);">Many roots. One ecosystem.</p>
     <a href="mailto:contact@yggdrasil-group.com" data-reveal="" style="margin-top: 8px; padding: 13px 28px; border: 1px solid rgba(198,162,92,.45); border-radius: 999px; font-size: 10px; letter-spacing: .3em; text-transform: uppercase;" style-hover="background: #C6A25C; color: #030304;">Nous écrire</a>
