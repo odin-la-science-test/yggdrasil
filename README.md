@@ -45,6 +45,44 @@ Ce dépôt contient le site vitrine du groupe (page holding + page « Racines »
 
 La holding ne dirige pas les entités au quotidien : elle met à disposition l'infrastructure (technologie, capital, savoir, gouvernance) sur laquelle chaque entité conserve son autonomie et son identité propre.
 
+```mermaid
+graph TD
+    YGG(["🌳 Yggdrasil Group<br/>Holding"])
+    INFRA["Infrastructure commune<br/>Technologie · Capital · Savoir · Gouvernance"]
+
+    YGG --> INFRA
+
+    INFRA --> E1["Odin la Science<br/><sub>Science & connaissance</sub>"]
+    INFRA --> E2["Saga<br/><sub>Patrimoine & musées</sub>"]
+    INFRA --> E3["Nua<br/><sub>Réseau social humain</sub>"]
+    INFRA --> E4["Nídhögg<br/><sub>Élevage d'invertébrés</sub>"]
+    INFRA --> E5["Verdandi<br/><sub>Textile & production</sub>"]
+    INFRA --> E6["Sleipnir<br/><sub>Véhicules d'exception</sub>"]
+    INFRA --> E7["Surtr<br/><sub>Streetwear nouvelle génération</sub>"]
+
+    classDef holding fill:#050506,stroke:#C6A25C,stroke-width:2px,color:#EDEAE4;
+    classDef infra fill:#0B0C0B,stroke:#EDEAE4,stroke-width:1px,color:#EDEAE4,stroke-dasharray: 3 3;
+    classDef odin fill:#0B1622,stroke:#89A7D6,color:#EDEAE4;
+    classDef saga fill:#1A140A,stroke:#C6A25C,color:#EDEAE4;
+    classDef nua fill:#210E14,stroke:#E86A8A,color:#EDEAE4;
+    classDef nidhogg fill:#0E1710,stroke:#7FA07A,color:#EDEAE4;
+    classDef verdandi fill:#181513,stroke:#C8B9A6,color:#EDEAE4;
+    classDef sleipnir fill:#12161A,stroke:#B9C0C7,color:#EDEAE4;
+    classDef surtr fill:#1E0D0A,stroke:#C8443A,color:#EDEAE4;
+
+    class YGG holding;
+    class INFRA infra;
+    class E1 odin;
+    class E2 saga;
+    class E3 nua;
+    class E4 nidhogg;
+    class E5 verdandi;
+    class E6 sleipnir;
+    class E7 surtr;
+```
+
+*Chaque entité pousse sur le même tronc (capital, technologie, savoir, gouvernance) mais reste souveraine sur son identité, son produit et son rythme.*
+
 ## Les 7 entités
 
 | # | Entité | Domaine | Mission |
@@ -85,38 +123,63 @@ Marque de streetwear nouvelle génération : coupes travaillées, broderies, mat
 
 ## Structure du dépôt
 
+Le dépôt contient **deux implémentations indépendantes** du même site : la version statique `.dc.html` d'origine, et une reconstruction React/TSX plus récente.
+
 ```
 yggdrasil/
-├── Yggdrasil Group.dc.html      # Page vitrine de la holding (FR)
-├── Yggdrasil Racines.dc.html    # Parcours immersif « Roots » (EN)
-├── Entite Odin.dc.html          # Fiche entité — Odin la Science
-├── Entite Saga.dc.html          # Fiche entité — Saga
-├── Entite Nua.dc.html           # Fiche entité — Nua
-├── Entite Nidhogg.dc.html       # Fiche entité — Nídhögg
-├── Entite Verdandi.dc.html      # Fiche entité — Verdandi
-├── Entite Sleipnir.dc.html      # Fiche entité — Sleipnir
-├── Entite Surtr.dc.html         # Fiche entité — Surtr
-├── support.js                   # Runtime (dc-runtime) qui exécute les composants .dc.html
+├── Yggdrasil Group.dc.html      # Page vitrine de la holding (FR)      ─┐
+├── Yggdrasil Racines.dc.html    # Parcours immersif « Roots » (EN)      │
+├── Entite Odin.dc.html          # Fiche entité — Odin la Science        │  implémentation
+├── Entite Saga.dc.html          # Fiche entité — Saga                   │  statique
+├── Entite Nua.dc.html           # Fiche entité — Nua                    │  (.dc.html)
+├── Entite Nidhogg.dc.html       # Fiche entité — Nídhögg                │
+├── Entite Verdandi.dc.html      # Fiche entité — Verdandi               │
+├── Entite Sleipnir.dc.html      # Fiche entité — Sleipnir               │
+├── Entite Surtr.dc.html         # Fiche entité — Surtr                  │
+├── support.js                   # Runtime (dc-runtime) des .dc.html    ─┘
+│
+├── react-app/                   # Reconstruction React/TSX (Vite)      ─┐
+│   ├── src/pages/                #  Home, About, Vision, Contact,       │  implémentation
+│   │                              #  Legal, Privacy                     │  React/TSX
+│   ├── src/components/           #  HomeNav, SubNav, Footer, Reveal,    │
+│   │                              #  TiltCard, LegalSidebar             │
+│   └── src/assets/images/        #  Visuels dédiés à cette version     ─┘
+│
 ├── assets/                      # Logos, emblèmes, visuels, modèle 3D (yggdrasil.glb)
 └── uploads/                     # Sources brutes des visuels
 ```
 
 ## Technologies
 
+**Implémentation statique (racine du dépôt)**
 - **Format `.dc.html`** — chaque page est un composant autonome (balise `<x-dc>`) exécuté par un petit runtime React embarqué ([`support.js`](support.js), généré depuis `dc-runtime/src/*.ts`).
 - **Three.js** (`GLTFLoader`) — rendu 3D interactif de l'emblème Yggdrasil (`assets/yggdrasil.glb`) sur les pages principales.
 - **Canvas 2D** — champs de particules animés (constellations, racines, réseau) réagissant au scroll et au curseur.
 - **Google Fonts** — *Jost* (UI) et *Cormorant Garamond* (citations, accents éditoriaux).
 - Aucune dépendance de build côté page : chaque fichier `.dc.html` est directement servable tel quel.
 
+**Implémentation React/TSX (`react-app/`)**
+- **Vite + React 19 + TypeScript**, routage via `react-router-dom`.
+- **Bricolage Grotesque**, **Manrope** et **JetBrains Mono** (Google Fonts).
+- Composants réutilisables (`Reveal`, `TiltCard`) pour les animations au scroll et l'effet de parallaxe des cartes.
+
 ## Consulter le site en local
 
-Les pages utilisent des modules ES et chargent des assets (police, modèle 3D) en `fetch` : ouvrez-les via un petit serveur local plutôt qu'en double-clic (`file://`) pour éviter les restrictions CORS/module.
+**Version statique** — les pages utilisent des modules ES et chargent des assets (police, modèle 3D) en `fetch` : ouvrez-les via un petit serveur local plutôt qu'en double-clic (`file://`) pour éviter les restrictions CORS/module.
 
 ```bash
 # depuis la racine du dépôt
 npx serve .
 # puis ouvrir http://localhost:3000/Yggdrasil%20Group.dc.html
+```
+
+**Version React/TSX**
+
+```bash
+cd react-app
+npm install
+npm run dev
+# puis ouvrir http://localhost:5173
 ```
 
 ## Charte graphique
