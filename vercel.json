@@ -1,9 +1,9 @@
 {
   "installCommand": "npm --prefix react-app install",
-  "buildCommand": "npm --prefix react-app run build && mv react-app/dist/index.html react-app/dist/app-index.html && cp 'Yggdrasil Racines.dc.html' react-app/dist/index.html && cp -r static-assets react-app/dist/static-assets/",
-  "outputDirectory": "react-app/dist",
+  "buildCommand": "npm --prefix react-app run build && cp 'Yggdrasil Racines.dc.html' index.html",
+  "outputDirectory": ".",
   "rewrites": [
-    { "source": "/app(/*)", "destination": "/app-index.html" },
-    { "source": "/app/assets/(.*)", "destination": "/assets/$1" }
+    { "source": "/app(/*)", "destination": "/react-app/dist/index.html" },
+    { "source": "/app/assets/(.*)", "destination": "/react-app/dist/assets/$1" }
   ]
 }
