@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="./support.js"></script>
+<script src="/static-assets/support.js"></script>
 </head>
 <body>
 <x-dc>
@@ -86,7 +86,7 @@
 
 <header style="position: fixed; top: 0; left: 0; right: 0; z-index: 40; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 20px clamp(20px, 4vw, 56px); backdrop-filter: blur(14px); background: linear-gradient(to bottom, rgba(5,5,6,.82), rgba(5,5,6,.24)); border-bottom: 1px solid rgba(237,234,228,.07);">
   <a href="#hero" style="display: flex; align-items: center; gap: 14px;">
-    <img src="assets/mark-yggdrasil.png" alt="Yggdrasil" style="width: 30px; height: 30px; object-fit: contain;" />
+    <img src="/static-assets/mark-yggdrasil.png" alt="Yggdrasil" style="width: 30px; height: 30px; object-fit: contain;" />
     <span style="font-size: 12px; letter-spacing: .42em; text-transform: uppercase; font-weight: 300;">Yggdrasil</span>
   </a>
   <nav style="display: flex; align-items: center; gap: clamp(16px, 2.4vw, 38px); font-size: 11px; letter-spacing: .26em; text-transform: uppercase; font-weight: 300;">
@@ -103,7 +103,7 @@
   <h1 style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); margin: 0;">Yggdrasil Groupe</h1>
   <div style="position: relative; flex: 1 1 0; height: 0; min-height: 0; overflow: hidden;">
     <div id="ygg-3d" style="position: absolute; inset: 0; z-index: 0; overflow: hidden;"></div>
-    <img id="ygg-3d-fallback" src="assets/yggdrasil-cut.png" alt="Emblème Yggdrasil Groupe" style="position: absolute; inset: 0; margin: auto; width: 100%; height: 100%; object-fit: contain; mix-blend-mode: screen; opacity: 1; transition: opacity 2s ease; animation: ygg-float 9s ease-in-out infinite;" />
+    <img id="ygg-3d-fallback" src="/static-assets/yggdrasil-cut.png" alt="Emblème Yggdrasil Groupe" style="position: absolute; inset: 0; margin: auto; width: 100%; height: 100%; object-fit: contain; mix-blend-mode: screen; opacity: 1; transition: opacity 2s ease; animation: ygg-float 9s ease-in-out infinite;" />
   </div>
   <div style="text-align: center; flex: 0 0 auto;">
       <p style="margin: 0 auto; max-width: 30ch; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(17px, 1.9vw, 27px); line-height: 1.4; color: rgba(237,234,228,.82); text-wrap: pretty; animation: ygg-fade-in 3s ease .8s both;">« Nous ne construisons pas des entreprises. Nous construisons des écosystèmes. »</p>
@@ -156,7 +156,7 @@
     <article data-reveal="swing" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: clamp(36px, 5vw, 88px); padding: clamp(90px, 12vh, 160px) 0; border-bottom: 1px solid rgba(237,234,228,.08);">
       <div style="position: sticky; top: 110px; align-self: start;">
         <div data-reveal="" style="position: relative; aspect-ratio: 1; display: grid; place-items: center; border: 1px solid rgba(137,167,214,.2); border-radius: 4px; background: radial-gradient(70% 70% at 50% 40%, rgba(137,167,214,.14), rgba(5,5,6,.9)); overflow: hidden;">
-          <img src="assets/odin.png" alt="Odin la Science" style="width: 72%; animation: ygg-float 11s ease-in-out infinite;" />
+          <img src="/static-assets/odin.png" alt="Odin la Science" style="width: 72%; animation: ygg-float 11s ease-in-out infinite;" />
           <div style="position: absolute; inset: 0; background: repeating-linear-gradient(0deg, rgba(137,167,214,.07) 0 1px, transparent 1px 46px); mix-blend-mode: screen;"></div>
         </div>
       </div>
@@ -204,7 +204,7 @@
       </div>
       <div style="position: sticky; top: 110px; align-self: start; order: 1;">
         <div data-reveal="" style="position: relative; aspect-ratio: 4 / 5; border: 1px solid rgba(198,162,92,.24); border-radius: 4px; overflow: hidden;">
-          <img src="assets/saga.png" alt="Saga" style="width: 100%; height: 100%; object-fit: cover; filter: sepia(.22) contrast(1.02);" />
+          <img src="/static-assets/saga.png" alt="Saga" style="width: 100%; height: 100%; object-fit: cover; filter: sepia(.22) contrast(1.02);" />
           <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(5,5,6,.86), rgba(5,5,6,.05) 60%);"></div>
           <div style="position: absolute; left: 22px; bottom: 20px; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 18px; color: rgba(237,234,228,.8);">Ce qui est transmis ne meurt pas.</div>
         </div>
@@ -214,7 +214,7 @@
     <article data-reveal="swing" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: clamp(36px, 5vw, 88px); padding: clamp(90px, 12vh, 160px) 0; border-bottom: 1px solid rgba(237,234,228,.08);">
       <div style="position: sticky; top: 110px; align-self: start;">
         <div data-reveal="" style="position: relative; aspect-ratio: 1; display: grid; place-items: center; border: 1px solid rgba(232,106,138,.22); border-radius: 4px; background: radial-gradient(65% 65% at 50% 45%, rgba(232,106,138,.16), rgba(5,5,6,.92)); overflow: hidden;">
-          <img src="assets/nua.png" alt="Nua" style="width: 46%; border-radius: 26px; box-shadow: 0 30px 90px rgba(232,106,138,.28); animation: ygg-float 8s ease-in-out infinite;" />
+          <img src="/static-assets/nua.png" alt="Nua" style="width: 46%; border-radius: 26px; box-shadow: 0 30px 90px rgba(232,106,138,.28); animation: ygg-float 8s ease-in-out infinite;" />
         </div>
       </div>
       <div style="display: grid; gap: 26px; align-content: start;">
@@ -250,7 +250,7 @@
       </div>
       <div style="position: sticky; top: 110px; align-self: start; order: 1;">
         <div data-reveal="" style="position: relative; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; padding: clamp(30px, 5vw, 70px); border: 1px solid rgba(127,160,122,.22); border-radius: 4px; background: radial-gradient(65% 65% at 50% 45%, rgba(127,160,122,.14), rgba(5,5,6,.92)); overflow: hidden;">
-          <img src="assets/mark-nidhogg.png" alt="Nídhögg" style="width: 100%; height: 100%; object-fit: contain; animation: ygg-float 10s ease-in-out infinite;" />
+          <img src="/static-assets/mark-nidhogg.png" alt="Nídhögg" style="width: 100%; height: 100%; object-fit: contain; animation: ygg-float 10s ease-in-out infinite;" />
         </div>
       </div>
     </article>
@@ -262,7 +262,7 @@
           <span style="font-size: 10px; letter-spacing: .3em; color: rgba(237,234,228,.3);">Textile</span>
         </div>
         <div style="height: 150px; display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 16px; border: 1px solid rgba(200,185,166,.2); background: radial-gradient(70% 70% at 50% 50%, rgba(200,185,166,.1), rgba(5,5,6,.9));">
-          <img src="assets/mark-verdandi.png" alt="Verdandi" style="width: 100%; height: 100%; object-fit: contain; filter: brightness(1.3) saturate(1.1);" />
+          <img src="/static-assets/mark-verdandi.png" alt="Verdandi" style="width: 100%; height: 100%; object-fit: contain; filter: brightness(1.3) saturate(1.1);" />
         </div>
         <h3 style="margin: 0; font-size: clamp(26px, 2.6vw, 38px); font-weight: 200; letter-spacing: .05em;">Verdandi</h3>
         <a href="Entite Verdandi.dc.html" style="justify-self: start; display: flex; align-items: center; gap: 12px; margin-top: 4px; font-size: 10px; letter-spacing: .3em; text-transform: uppercase; color: rgba(237,234,228,.7);"><span style="width: 6px; height: 6px; border-radius: 50%; background: #C6A25C;"></span>Découvrir</a>
@@ -274,7 +274,7 @@
           <span style="font-size: 10px; letter-spacing: .3em; color: rgba(237,234,228,.3);">Métal</span>
         </div>
         <div style="height: 150px; display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 14px; border: 1px solid rgba(185,192,199,.22); background: radial-gradient(70% 70% at 50% 50%, rgba(185,192,199,.09), rgba(5,5,6,.9));">
-          <img src="assets/mark-sleipnir.png" alt="Sleipnir" style="width: 100%; height: 100%; object-fit: contain;" />
+          <img src="/static-assets/mark-sleipnir.png" alt="Sleipnir" style="width: 100%; height: 100%; object-fit: contain;" />
         </div>
         <h3 style="margin: 0; font-size: clamp(26px, 2.6vw, 38px); font-weight: 200; letter-spacing: .05em;">Sleipnir</h3>
         <a href="Entite Sleipnir.dc.html" style="justify-self: start; display: flex; align-items: center; gap: 12px; margin-top: 4px; font-size: 10px; letter-spacing: .3em; text-transform: uppercase; color: rgba(237,234,228,.7);"><span style="width: 6px; height: 6px; border-radius: 50%; background: #C6A25C;"></span>Découvrir</a>
@@ -286,7 +286,7 @@
           <span style="font-size: 10px; letter-spacing: .3em; color: rgba(237,234,228,.3);">Streetwear</span>
         </div>
         <div style="height: 150px; display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 16px; border: 1px solid rgba(200,68,58,.28); background: radial-gradient(60% 100% at 50% 120%, rgba(200,68,58,.22), rgba(5,5,6,.95));">
-          <img src="assets/mark-surtr.png" alt="Surtr" style="width: 100%; height: 100%; object-fit: contain; filter: brightness(1.35) contrast(1.05);" />
+          <img src="/static-assets/mark-surtr.png" alt="Surtr" style="width: 100%; height: 100%; object-fit: contain; filter: brightness(1.35) contrast(1.05);" />
         </div>
         <h3 style="margin: 0; font-size: clamp(26px, 2.6vw, 38px); font-weight: 200; letter-spacing: .05em;">Surtr</h3>
         <a href="Entite Surtr.dc.html" style="justify-self: start; display: flex; align-items: center; gap: 12px; margin-top: 4px; font-size: 10px; letter-spacing: .3em; text-transform: uppercase; color: rgba(237,234,228,.7);"><span style="width: 6px; height: 6px; border-radius: 50%; background: #C6A25C;"></span>Découvrir</a>
@@ -301,14 +301,14 @@
     <div style="position: relative; aspect-ratio: 1; display: grid; place-items: center;">
       <div style="position: absolute; width: 86%; aspect-ratio: 1; border: 1px solid rgba(237,234,228,.08); border-radius: 50%;"></div>
       <div style="position: absolute; width: 58%; aspect-ratio: 1; border: 1px solid rgba(198,162,92,.14); border-radius: 50%;"></div>
-      <img src="assets/mark-yggdrasil.png" alt="Yggdrasil" style="position: relative; z-index: 2; width: 30%;" />
+      <img src="/static-assets/mark-yggdrasil.png" alt="Yggdrasil" style="position: relative; z-index: 2; width: 30%;" />
       <div style="position: absolute; inset: 0; animation: ygg-orbit 74s linear infinite;">
         <div style="position: absolute; inset: 12%; transform: rotate(0.00deg);">
           <div style="position: absolute; top: 0; left: 50%; width: 0; height: 0;">
             <div style="transform: rotate(0.00deg);">
               <div style="animation: ygg-anti 74s linear infinite;">
                 <div style="position: absolute; left: -55px; top: -56px; width: 110px; display: flex; flex-direction: column; align-items: center; gap: 10px;">
-                  <div style="width: 78px; height: 78px; display: flex; align-items: center; justify-content: center;"><img src="assets/mark-odin.png" alt="Odin" style="width: 78px; height: 78px; object-fit: contain;" /></div>
+                  <div style="width: 78px; height: 78px; display: flex; align-items: center; justify-content: center;"><img src="/static-assets/mark-odin.png" alt="Odin" style="width: 78px; height: 78px; object-fit: contain;" /></div>
                   <div style="font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: rgba(237,234,228,.6); white-space: nowrap;">Odin</div>
                 </div>
               </div>
@@ -320,7 +320,7 @@
             <div style="transform: rotate(-51.43deg);">
               <div style="animation: ygg-anti 74s linear infinite;">
                 <div style="position: absolute; left: -55px; top: -56px; width: 110px; display: flex; flex-direction: column; align-items: center; gap: 10px;">
-                  <div style="width: 78px; height: 78px; display: flex; align-items: center; justify-content: center;"><img src="assets/mark-saga.png" alt="Saga" style="width: 78px; height: 78px; object-fit: contain; opacity: .92;" /></div>
+                  <div style="width: 78px; height: 78px; display: flex; align-items: center; justify-content: center;"><img src="/static-assets/mark-saga.png" alt="Saga" style="width: 78px; height: 78px; object-fit: contain; opacity: .92;" /></div>
                   <div style="font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: rgba(237,234,228,.6); white-space: nowrap;">Saga</div>
                 </div>
               </div>
@@ -332,7 +332,7 @@
             <div style="transform: rotate(-102.86deg);">
               <div style="animation: ygg-anti 74s linear infinite;">
                 <div style="position: absolute; left: -55px; top: -56px; width: 110px; display: flex; flex-direction: column; align-items: center; gap: 10px;">
-                  <div style="width: 78px; height: 78px; display: flex; align-items: center; justify-content: center;"><img src="assets/nua.png" alt="Nua" style="width: 72px; height: 72px; object-fit: contain; border-radius: 22%;" /></div>
+                  <div style="width: 78px; height: 78px; display: flex; align-items: center; justify-content: center;"><img src="/static-assets/nua.png" alt="Nua" style="width: 72px; height: 72px; object-fit: contain; border-radius: 22%;" /></div>
                   <div style="font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: rgba(237,234,228,.6); white-space: nowrap;">Nua</div>
                 </div>
               </div>
@@ -344,7 +344,7 @@
             <div style="transform: rotate(-154.29deg);">
               <div style="animation: ygg-anti 74s linear infinite;">
                 <div style="position: absolute; left: -55px; top: -56px; width: 110px; display: flex; flex-direction: column; align-items: center; gap: 10px;">
-                  <div style="width: 78px; height: 78px; display: flex; align-items: center; justify-content: center;"><img src="assets/mark-nidhogg.png" alt="Nídhögg" style="width: 78px; height: 78px; object-fit: contain;" /></div>
+                  <div style="width: 78px; height: 78px; display: flex; align-items: center; justify-content: center;"><img src="/static-assets/mark-nidhogg.png" alt="Nídhögg" style="width: 78px; height: 78px; object-fit: contain;" /></div>
                   <div style="font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: rgba(237,234,228,.6); white-space: nowrap;">Nídhögg</div>
                 </div>
               </div>
@@ -356,7 +356,7 @@
             <div style="transform: rotate(-205.71deg);">
               <div style="animation: ygg-anti 74s linear infinite;">
                 <div style="position: absolute; left: -55px; top: -56px; width: 110px; display: flex; flex-direction: column; align-items: center; gap: 10px;">
-                  <div style="width: 78px; height: 78px; display: flex; align-items: center; justify-content: center;"><img src="assets/mark-verdandi.png" alt="Verdandi" style="width: 78px; height: 78px; object-fit: contain; filter: brightness(1.35) saturate(1.1);" /></div>
+                  <div style="width: 78px; height: 78px; display: flex; align-items: center; justify-content: center;"><img src="/static-assets/mark-verdandi.png" alt="Verdandi" style="width: 78px; height: 78px; object-fit: contain; filter: brightness(1.35) saturate(1.1);" /></div>
                   <div style="font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: rgba(237,234,228,.6); white-space: nowrap;">Verdandi</div>
                 </div>
               </div>
@@ -368,7 +368,7 @@
             <div style="transform: rotate(-257.14deg);">
               <div style="animation: ygg-anti 74s linear infinite;">
                 <div style="position: absolute; left: -55px; top: -56px; width: 110px; display: flex; flex-direction: column; align-items: center; gap: 10px;">
-                  <div style="width: 78px; height: 78px; display: flex; align-items: center; justify-content: center;"><img src="assets/mark-sleipnir.png" alt="Sleipnir" style="width: 78px; height: 78px; object-fit: contain;" /></div>
+                  <div style="width: 78px; height: 78px; display: flex; align-items: center; justify-content: center;"><img src="/static-assets/mark-sleipnir.png" alt="Sleipnir" style="width: 78px; height: 78px; object-fit: contain;" /></div>
                   <div style="font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: rgba(237,234,228,.6); white-space: nowrap;">Sleipnir</div>
                 </div>
               </div>
@@ -380,7 +380,7 @@
             <div style="transform: rotate(-308.57deg);">
               <div style="animation: ygg-anti 74s linear infinite;">
                 <div style="position: absolute; left: -55px; top: -56px; width: 110px; display: flex; flex-direction: column; align-items: center; gap: 10px;">
-                  <div style="width: 78px; height: 78px; display: flex; align-items: center; justify-content: center;"><img src="assets/mark-surtr.png" alt="Surtr" style="width: 78px; height: 78px; object-fit: contain; filter: brightness(1.4);" /></div>
+                  <div style="width: 78px; height: 78px; display: flex; align-items: center; justify-content: center;"><img src="/static-assets/mark-surtr.png" alt="Surtr" style="width: 78px; height: 78px; object-fit: contain; filter: brightness(1.4);" /></div>
                   <div style="font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: rgba(237,234,228,.6); white-space: nowrap;">Surtr</div>
                 </div>
               </div>
@@ -408,7 +408,7 @@
 
 <section id="manifeste" style="position: relative; padding: clamp(130px, 20vh, 240px) clamp(20px, 4vw, 56px);">
   <div style="max-width: 1080px; margin: 0 auto; text-align: center; display: grid; gap: clamp(40px, 6vh, 72px); justify-items: center;">
-    <img src="assets/yggdrasil-cut.png" alt="Sceau Yggdrasil" data-reveal="" style="width: clamp(120px, 14vw, 190px); opacity: .55; animation: ygg-breathe 9s ease-in-out infinite;" />
+    <img src="/static-assets/yggdrasil-cut.png" alt="Sceau Yggdrasil" data-reveal="" style="width: clamp(120px, 14vw, 190px); opacity: .55; animation: ygg-breathe 9s ease-in-out infinite;" />
     <blockquote data-reveal="" style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(24px, 3.6vw, 50px); line-height: 1.35; letter-spacing: .01em; color: #EDEAE4; text-wrap: pretty;">« Nous imaginons des entreprises capables d'évoluer librement tout en partageant une architecture commune. »</blockquote>
     <div data-reveal="" style="display: flex; flex-wrap: wrap; justify-content: center; gap: clamp(20px, 4vw, 54px); font-size: 11px; letter-spacing: .34em; text-transform: uppercase; color: rgba(237,234,228,.55);">
       <span>Systèmes ouverts</span>
@@ -454,7 +454,7 @@
   <div style="max-width: 1360px; margin: 0 auto; display: grid; gap: clamp(50px, 7vw, 90px);">
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: clamp(34px, 4vw, 64px);">
       <div style="display: grid; gap: 18px; align-content: start;">
-        <img src="assets/yggdrasil-cut.png" alt="Yggdrasil Groupe" style="width: 120px;" />
+        <img src="/static-assets/yggdrasil-cut.png" alt="Yggdrasil Groupe" style="width: 120px;" />
         <p style="margin: 0; font-size: 13px; line-height: 1.7; color: rgba(237,234,228,.45); max-width: 26ch;">Holding d'entités indépendantes, reliées par une architecture commune.</p>
       </div>
       <div style="display: grid; gap: 14px; align-content: start; font-size: 13px;">
