@@ -4,6 +4,7 @@
   "outputDirectory": "react-app/dist",
   "rewrites": [
     { "source": "/", "destination": "/Yggdrasil Racines.dc.html" },
-    { "source": "/app(/*)", "destination": "/index.html" }
+    { "source": "/app(/*)", "destination": "/index.html" },
+    { "source": "/app/assets/(.*)", "destination": "/assets/$1" }
   ]
 }
